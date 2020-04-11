@@ -1,4 +1,4 @@
-# SR-71- Autonoumous & Anonymous Scanning
+# SR-71- Autonomous & Anonymous Scanning
 
 ## Current capabilities
 
