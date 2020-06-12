@@ -1,4 +1,3 @@
-
 import requests
 from colorama import Fore
 
@@ -40,7 +39,7 @@ class Cloak():
     def get(self, url):
         r = None
         try:
-            r  =  self.session.get(url)
+            r  =  self.session.get(url, timeout = 1)
             code = r.status_code
         except:
             code = 404

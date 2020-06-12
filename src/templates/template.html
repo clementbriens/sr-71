@@ -11,8 +11,9 @@
 </head>
 <body>
   <h1> {{ target }} vulnerability report </h1>
-
-    <h2>Domains</h2>
+    <h2> Network and Vulnerabilities </h2>
+    <p> This section aims to provide an overview of {{ target }}'s network, including subdomains, as well as the technologies and Critical Vunlerabilities and Exposures (CVEs) found on the subdomains. In addition to providing CVE Severity Scores (CVSS), this report also provides an overview of the associated Common Weaknesses Enumeration (CWEs). </p>
+    <h3>Domains</h3>
     <p> SR-71 was able to find {{ nb_domains }} subdomains associate to {{ target }}. SR-71 was also able to find {{ nb_tech }} technologies associated to these domains.</p>
     <br>
     </br>
@@ -23,7 +24,7 @@
     <br>
     </br>
 
-    <h2>Vulnerabilities</h2>
+    <h3>Vulnerabilities</h3>
     <p>SR-71 was able to find {{ unique_cves }} unique CVEs associated to {{ target }}, located on {{ unique_domains }} domains on the target network. CVE's found have an average severity of {{ mean_severity }}, with {{ nb_critical }} vulnerabilities rated 'CRITICAL' (8.0 or higher.) </p>
     <p> The most common vulnerability type found was {{ most_common_vulnerability }}.</p>
     <div >
@@ -38,7 +39,7 @@
     <br>
     </br>
 
-    <h2>Common Weaknesses (CWEs)</h2>
+    <h3>Common Weaknesses (CWEs)</h3>
     <p>SR-71 was able to find {{ unique_cwes }} unique CWEs associated to vulnerabilities found on {{ target }}</p>
     <p> The most common weakness type found was {{ most_common_weakness }}.</p>
     <div >
@@ -47,14 +48,27 @@
     <br>
     </br>
 
-    <h2>Technologies</h2>
-    <p>SR-71 was able to find {{ unique_tech }} technologies on {{ target }}. The most common technology found was {{ most_common_tech }}, and the most common technology type was {{ most_common_type }}.</p>
+    <h3>Potential Impact</h3>
+    <div>
+      {{ impact_df }}
+    </div>
+
+    <h3>Technologies</h3>
+    <p>SR-71 was able to find {{ unique_tech }} technologies on {{ target }}. The most common technology found was {{ most_common_tech }}, and the most common technology type found was {{ most_common_type }}.</p>
 
     <div >
       {{ tech_df }}
     </div>
     <br>
     </br>
+    <h2>OSINT</h2>
+    <p> This section presents SR-71's findings in terms of OSINT found on {{ target }}'s network. This includes social media accounts, emails, telephone numbers, and other factors that may interest threat actors when conducting social engineering attacks or during the reconnaissance phase of a wider network exploitation. </p>
+    <h3> Social Media</h3>
+    <p> SR-71 was able to find {{ nb_socmedia }} links with {{ unique_socmedia }} unique social media platforms on {{ target }}. The most common social media platform referenced was {{ most_common_socmedia }}. </p>
+
+    <div>
+      {{ socmedia_df }}
+    </div>
 
 </body>
 </html>
