@@ -1,0 +1,159 @@
+[
+    {
+        "domain": "wiki.orpheus-cyber.com",
+        "response": 404,
+        "technologies": []
+    },
+    {
+        "domain": "cpanel.orpheus-cyber.com",
+        "response": 200,
+        "technologies": [
+            {
+                "app": "LiteSpeed",
+                "ver": null,
+                "type": "Web Servers"
+            },
+            {
+                "app": "cPanel",
+                "ver": null,
+                "type": "Hosting Panels"
+            }
+        ]
+    },
+    {
+        "domain": "cpcalendars.orpheus-cyber.com",
+        "response": 404,
+        "technologies": []
+    },
+    {
+        "domain": "cpcontacts.orpheus-cyber.com",
+        "response": 404,
+        "technologies": []
+    },
+    {
+        "domain": "mail.orpheus-cyber.com",
+        "response": 404,
+        "technologies": []
+    },
+    {
+        "domain": "orpheus-cyber.com",
+        "response": 200,
+        "technologies": [
+            {
+                "app": "LiteSpeed",
+                "ver": null,
+                "type": "Web Servers"
+            },
+            {
+                "app": "WordPress",
+                "ver": "5.4.2",
+                "type": "CMS,Blogs"
+            },
+            {
+                "app": "Litespeed Cache",
+                "ver": null,
+                "type": "Cache Tools"
+            },
+            {
+                "app": "jQuery",
+                "ver": "1.12.4",
+                "type": "JavaScript Libraries"
+            },
+            {
+                "app": "jQuery",
+                "ver": "1.4.1",
+                "type": "JavaScript Libraries"
+            },
+            {
+                "app": "jQuery Migrate",
+                "ver": "\\2",
+                "type": "JavaScript Libraries"
+            },
+            {
+                "app": "jQuery",
+                "ver": "1.0.1",
+                "type": "JavaScript Libraries"
+            },
+            {
+                "app": "particles.js",
+                "ver": null,
+                "type": "JavaScript Graphics"
+            },
+            {
+                "app": "UIKit",
+                "ver": null,
+                "type": "UI Frameworks"
+            },
+            {
+                "app": "Elementor",
+                "ver": "2.9.11",
+                "type": "Landing Page Builders"
+            },
+            {
+                "app": "jQuery",
+                "ver": "1.11.4",
+                "type": "JavaScript Libraries"
+            },
+            {
+                "app": "Swiper Slider",
+                "ver": null,
+                "type": "Miscellaneous"
+            },
+            {
+                "app": "jQuery",
+                "ver": "2.10.0",
+                "type": "JavaScript Libraries"
+            },
+            {
+                "app": "Google Font API",
+                "ver": null,
+                "type": "Font Scripts"
+            },
+            {
+                "app": "Yoast SEO",
+                "ver": "14.2",
+                "type": "SEO"
+            },
+            {
+                "app": "MySQL",
+                "ver": null,
+                "type": "Databases"
+            },
+            {
+                "app": "PHP",
+                "ver": null,
+                "type": "Programming Languages"
+            }
+        ]
+    },
+    {
+        "domain": "webdisk.orpheus-cyber.com",
+        "response": 404,
+        "technologies": []
+    },
+    {
+        "domain": "webmail.orpheus-cyber.com",
+        "response": 404,
+        "technologies": []
+    },
+    {
+        "domain": "www.orpheus-cyber.com",
+        "response": 200,
+        "technologies": []
+    },
+    {
+        "domain": "payments.orpheus-cyber.com",
+        "response": 404,
+        "technologies": []
+    },
+    {
+        "domain": "edge4health.orpheus-cyber.com",
+        "response": 404,
+        "technologies": []
+    },
+    {
+        "domain": "edgeconnect.orpheus-cyber.com",
+        "response": 404,
+        "technologies": []
+    }
+]

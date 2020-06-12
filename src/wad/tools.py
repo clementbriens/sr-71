@@ -45,20 +45,8 @@ def getaddrinfo(*args):
 
 
 def urlopen(url, timeout):
-    # timeout = 2
     headers = {'User-Agent': 'Mozilla/5.0 Firefox/33.0'}
-    # ip = six.moves.urllib.request.urlopen("http://almien.co.uk/m/tools/net/ip/").read()
-    # print('------ WAD IP: ' + str(ip).split('IPv4: ')[1].split('<')[0])
-    # # proxies = {'http' : 'http://localhost:9050',
-    # #             'https' : 'h'}
-    # req = six.moves.urllib.request.Request(url, None, headers)
-    # if sys.version_info >= (2, 7, 9):
-    #     page = six.moves.urllib.request.urlopen(req, timeout=timeout, context=ssl._create_unverified_context())
-    # else:
-    #     page = six.moves.urllib.request.urlopen(req, timeout=timeout)
-    # print(page)
     session = requests.session()
-
     session.proxies = {'http':  'socks5://127.0.0.1:9050',
                        'https': 'socks5://127.0.0.1:9050'}
     ip = session.get('http://almien.co.uk/m/tools/net/ip/', headers = headers).text.split("IPv4: ")[1].split('<')[0]

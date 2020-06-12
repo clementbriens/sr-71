@@ -1,0 +1,380 @@
+[
+    {
+        "domain": "orpheus-cyber.com",
+        "tech": "jQuery 1.12.4",
+        "cves": [
+            {
+                "cve_name": "CVE-2019-11358",
+                "cvss": "4.3",
+                "vulnerability_types": [
+                    "Cross Site Scripting"
+                ],
+                "cwes": [
+                    {
+                        "cwe_id": "CWE-79",
+                        "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                        "cwe_description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users. ",
+                        "cwe_impact": [
+                            {
+                                "scope": [
+                                    "Access ",
+                                    "Control",
+                                    "Confidentiality"
+                                ],
+                                "description": "The most common attack performed with cross-site scripting involves the disclosure of information stored in user cookies. Typically, a malicious user will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each user visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also. "
+                            },
+                            {
+                                "scope": [
+                                    "Integrity",
+                                    "Confidentiality",
+                                    "Availability"
+                                ],
+                                "description": "In some circumstances it may be possible to run arbitrary code on a victim's computer when cross-site scripting is combined with other flaws. "
+                            },
+                            {
+                                "scope": [
+                                    "Confidentiality",
+                                    "Integrity",
+                                    "Availability",
+                                    "Access ",
+                                    "Control"
+                                ],
+                                "description": "The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end user that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid user, compromise confidential information, or execute malicious code on the end user systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end user files, installation of Trojan horse programs, redirecting the user to some other page or site, running \"Active X\" controls (under Microsoft Internet Explorer) from sites that a user perceives as trustworthy, and modifying presentation of content. "
+                            }
+                        ],
+                        "cwe_mitigation": [
+                            "No known mitigations found"
+                        ]
+                    }
+                ]
+            },
+            {
+                "cve_name": "CVE-2015-9251",
+                "cvss": "4.3",
+                "vulnerability_types": [
+                    "Cross Site Scripting"
+                ],
+                "cwes": [
+                    {
+                        "cwe_id": "CWE-79",
+                        "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                        "cwe_description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users. ",
+                        "cwe_impact": [
+                            {
+                                "scope": [
+                                    "Access ",
+                                    "Control",
+                                    "Confidentiality"
+                                ],
+                                "description": "The most common attack performed with cross-site scripting involves the disclosure of information stored in user cookies. Typically, a malicious user will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each user visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also. "
+                            },
+                            {
+                                "scope": [
+                                    "Integrity",
+                                    "Confidentiality",
+                                    "Availability"
+                                ],
+                                "description": "In some circumstances it may be possible to run arbitrary code on a victim's computer when cross-site scripting is combined with other flaws. "
+                            },
+                            {
+                                "scope": [
+                                    "Confidentiality",
+                                    "Integrity",
+                                    "Availability",
+                                    "Access ",
+                                    "Control"
+                                ],
+                                "description": "The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end user that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid user, compromise confidential information, or execute malicious code on the end user systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end user files, installation of Trojan horse programs, redirecting the user to some other page or site, running \"Active X\" controls (under Microsoft Internet Explorer) from sites that a user perceives as trustworthy, and modifying presentation of content. "
+                            }
+                        ],
+                        "cwe_mitigation": [
+                            "No known mitigations found"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "domain": "orpheus-cyber.com",
+        "tech": "jQuery 1.4.1",
+        "cves": [
+            {
+                "cve_name": "CVE-2019-11358",
+                "cvss": "4.3",
+                "vulnerability_types": [
+                    "Cross Site Scripting"
+                ],
+                "cwes": [
+                    {
+                        "cwe_id": "CWE-79",
+                        "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                        "cwe_description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users. ",
+                        "cwe_impact": [
+                            {
+                                "scope": [
+                                    "Access ",
+                                    "Control",
+                                    "Confidentiality"
+                                ],
+                                "description": "The most common attack performed with cross-site scripting involves the disclosure of information stored in user cookies. Typically, a malicious user will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each user visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also. "
+                            },
+                            {
+                                "scope": [
+                                    "Integrity",
+                                    "Confidentiality",
+                                    "Availability"
+                                ],
+                                "description": "In some circumstances it may be possible to run arbitrary code on a victim's computer when cross-site scripting is combined with other flaws. "
+                            },
+                            {
+                                "scope": [
+                                    "Confidentiality",
+                                    "Integrity",
+                                    "Availability",
+                                    "Access ",
+                                    "Control"
+                                ],
+                                "description": "The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end user that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid user, compromise confidential information, or execute malicious code on the end user systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end user files, installation of Trojan horse programs, redirecting the user to some other page or site, running \"Active X\" controls (under Microsoft Internet Explorer) from sites that a user perceives as trustworthy, and modifying presentation of content. "
+                            }
+                        ],
+                        "cwe_mitigation": [
+                            "No known mitigations found"
+                        ]
+                    }
+                ]
+            },
+            {
+                "cve_name": "CVE-2015-9251",
+                "cvss": "4.3",
+                "vulnerability_types": [
+                    "Cross Site Scripting"
+                ],
+                "cwes": [
+                    {
+                        "cwe_id": "CWE-79",
+                        "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                        "cwe_description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users. ",
+                        "cwe_impact": [
+                            {
+                                "scope": [
+                                    "Access ",
+                                    "Control",
+                                    "Confidentiality"
+                                ],
+                                "description": "The most common attack performed with cross-site scripting involves the disclosure of information stored in user cookies. Typically, a malicious user will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each user visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also. "
+                            },
+                            {
+                                "scope": [
+                                    "Integrity",
+                                    "Confidentiality",
+                                    "Availability"
+                                ],
+                                "description": "In some circumstances it may be possible to run arbitrary code on a victim's computer when cross-site scripting is combined with other flaws. "
+                            },
+                            {
+                                "scope": [
+                                    "Confidentiality",
+                                    "Integrity",
+                                    "Availability",
+                                    "Access ",
+                                    "Control"
+                                ],
+                                "description": "The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end user that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid user, compromise confidential information, or execute malicious code on the end user systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end user files, installation of Trojan horse programs, redirecting the user to some other page or site, running \"Active X\" controls (under Microsoft Internet Explorer) from sites that a user perceives as trustworthy, and modifying presentation of content. "
+                            }
+                        ],
+                        "cwe_mitigation": [
+                            "No known mitigations found"
+                        ]
+                    }
+                ]
+            },
+            {
+                "cve_name": "CVE-2012-6708",
+                "cvss": "4.3",
+                "vulnerability_types": [
+                    "Cross Site Scripting"
+                ],
+                "cwes": [
+                    {
+                        "cwe_id": "CWE-79",
+                        "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                        "cwe_description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users. ",
+                        "cwe_impact": [
+                            {
+                                "scope": [
+                                    "Access ",
+                                    "Control",
+                                    "Confidentiality"
+                                ],
+                                "description": "The most common attack performed with cross-site scripting involves the disclosure of information stored in user cookies. Typically, a malicious user will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each user visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also. "
+                            },
+                            {
+                                "scope": [
+                                    "Integrity",
+                                    "Confidentiality",
+                                    "Availability"
+                                ],
+                                "description": "In some circumstances it may be possible to run arbitrary code on a victim's computer when cross-site scripting is combined with other flaws. "
+                            },
+                            {
+                                "scope": [
+                                    "Confidentiality",
+                                    "Integrity",
+                                    "Availability",
+                                    "Access ",
+                                    "Control"
+                                ],
+                                "description": "The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end user that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid user, compromise confidential information, or execute malicious code on the end user systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end user files, installation of Trojan horse programs, redirecting the user to some other page or site, running \"Active X\" controls (under Microsoft Internet Explorer) from sites that a user perceives as trustworthy, and modifying presentation of content. "
+                            }
+                        ],
+                        "cwe_mitigation": [
+                            "No known mitigations found"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "domain": "orpheus-cyber.com",
+        "tech": "jQuery 1.0.1",
+        "cves": [
+            {
+                "cve_name": "CVE-2019-11358",
+                "cvss": "4.3",
+                "vulnerability_types": [
+                    "Cross Site Scripting"
+                ],
+                "cwes": [
+                    {
+                        "cwe_id": "CWE-79",
+                        "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                        "cwe_description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users. ",
+                        "cwe_impact": [
+                            {
+                                "scope": [
+                                    "Access ",
+                                    "Control",
+                                    "Confidentiality"
+                                ],
+                                "description": "The most common attack performed with cross-site scripting involves the disclosure of information stored in user cookies. Typically, a malicious user will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each user visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also. "
+                            },
+                            {
+                                "scope": [
+                                    "Integrity",
+                                    "Confidentiality",
+                                    "Availability"
+                                ],
+                                "description": "In some circumstances it may be possible to run arbitrary code on a victim's computer when cross-site scripting is combined with other flaws. "
+                            },
+                            {
+                                "scope": [
+                                    "Confidentiality",
+                                    "Integrity",
+                                    "Availability",
+                                    "Access ",
+                                    "Control"
+                                ],
+                                "description": "The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end user that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid user, compromise confidential information, or execute malicious code on the end user systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end user files, installation of Trojan horse programs, redirecting the user to some other page or site, running \"Active X\" controls (under Microsoft Internet Explorer) from sites that a user perceives as trustworthy, and modifying presentation of content. "
+                            }
+                        ],
+                        "cwe_mitigation": [
+                            "No known mitigations found"
+                        ]
+                    }
+                ]
+            },
+            {
+                "cve_name": "CVE-2015-9251",
+                "cvss": "4.3",
+                "vulnerability_types": [
+                    "Cross Site Scripting"
+                ],
+                "cwes": [
+                    {
+                        "cwe_id": "CWE-79",
+                        "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                        "cwe_description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users. ",
+                        "cwe_impact": [
+                            {
+                                "scope": [
+                                    "Access ",
+                                    "Control",
+                                    "Confidentiality"
+                                ],
+                                "description": "The most common attack performed with cross-site scripting involves the disclosure of information stored in user cookies. Typically, a malicious user will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each user visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also. "
+                            },
+                            {
+                                "scope": [
+                                    "Integrity",
+                                    "Confidentiality",
+                                    "Availability"
+                                ],
+                                "description": "In some circumstances it may be possible to run arbitrary code on a victim's computer when cross-site scripting is combined with other flaws. "
+                            },
+                            {
+                                "scope": [
+                                    "Confidentiality",
+                                    "Integrity",
+                                    "Availability",
+                                    "Access ",
+                                    "Control"
+                                ],
+                                "description": "The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end user that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid user, compromise confidential information, or execute malicious code on the end user systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end user files, installation of Trojan horse programs, redirecting the user to some other page or site, running \"Active X\" controls (under Microsoft Internet Explorer) from sites that a user perceives as trustworthy, and modifying presentation of content. "
+                            }
+                        ],
+                        "cwe_mitigation": [
+                            "No known mitigations found"
+                        ]
+                    }
+                ]
+            },
+            {
+                "cve_name": "CVE-2012-6708",
+                "cvss": "4.3",
+                "vulnerability_types": [
+                    "Cross Site Scripting"
+                ],
+                "cwes": [
+                    {
+                        "cwe_id": "CWE-79",
+                        "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+                        "cwe_description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users. ",
+                        "cwe_impact": [
+                            {
+                                "scope": [
+                                    "Access ",
+                                    "Control",
+                                    "Confidentiality"
+                                ],
+                                "description": "The most common attack performed with cross-site scripting involves the disclosure of information stored in user cookies. Typically, a malicious user will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each user visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also. "
+                            },
+                            {
+                                "scope": [
+                                    "Integrity",
+                                    "Confidentiality",
+                                    "Availability"
+                                ],
+                                "description": "In some circumstances it may be possible to run arbitrary code on a victim's computer when cross-site scripting is combined with other flaws. "
+                            },
+                            {
+                                "scope": [
+                                    "Confidentiality",
+                                    "Integrity",
+                                    "Availability",
+                                    "Access ",
+                                    "Control"
+                                ],
+                                "description": "The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end user that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid user, compromise confidential information, or execute malicious code on the end user systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end user files, installation of Trojan horse programs, redirecting the user to some other page or site, running \"Active X\" controls (under Microsoft Internet Explorer) from sites that a user perceives as trustworthy, and modifying presentation of content. "
+                            }
+                        ],
+                        "cwe_mitigation": [
+                            "No known mitigations found"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

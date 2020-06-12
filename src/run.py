@@ -1,9 +1,7 @@
 import requests
 import json
 from cloak import Cloak
-from osint import OSINT
 from bs4 import BeautifulSoup
-from multiprocessing import Pool
 from wad import detection
 import os
 import subprocess
@@ -16,20 +14,35 @@ import vuln
 import report
 from ast import literal_eval
 import sys
+import argparse
+import dateparser
+from datetime import datetime
+
+
+
 
 class BlackBird():
 
+    def get_args(self):
+        ap = argparse.ArgumentParser()
+        ap.add_argument("-d","--domain", required=True,help="Master domain to recon.")
+        ap.add_argument("-j","--json", action='store_true', help="JSON export of vulnerabilities and domain data.")
+
+
+        return vars(ap.parse_args())
     def __init__(self):
-        self.target = input('Target: ')
+        self.now = dateparser.parse(str(datetime.now()))
+        self.args = self.get_args()
+        self.target = self.args['domain']
+        self.certs = []
         self.domains = []
         self.data = []
         self.vulnerabilities = []
         self.technologies = []
-        self.flying = False
-        self.osint = True
         self.pp = pprint.PrettyPrinter()
 
     def enum_domains(self, target):
+        certs = pd.DataFrame(columns = ['domain', 'not_after'])
         url = 'https://crt.sh/?q={}&output=json'.format(target)
         r = requests.get(url)
         try:
@@ -39,7 +52,9 @@ class BlackBird():
                     for s in subdomain.split('\n'):
                         if s not in self.domains:
                             self.domains.append(s)
-            cloak.sprint(str(len(self.domains)) + ' domains found!')
+                        cert_data = d
+                        cert_data['name_value'] = s
+                        self.certs.append(cert_data)
         except:
             print('Crt.sh not responding. Please try again.')
             sys.exit()
@@ -76,16 +91,24 @@ class BlackBird():
         domain_data = {}
         domain_data['domain'] = domain
         domain_data['response'] = code
-        if code == 200:
+        if code != 404:
             domain_data['technologies'] = self.detect_tech(domain)
-        if code != 404 and self.osint == True:
-            domain_data['osint'] = osint.run(r, self.target)
         else:
             domain_data['technologies'] = []
 
-        return domain_data
+        self.data.append(domain_data)
 
     def export(self):
+
+        if self.args['json']:
+            with open('{}_vulnerabilities.json'.format(self.target), 'w', encoding='utf-8') as f:
+                json.dump(self.vulnerabilities, f, ensure_ascii=False, indent=4)
+                print('{}_vulnerabilities.json'.format(self.target), 'saved to folder.')
+
+            with open('{}_domains.json'.format(self.target), 'w', encoding='utf-8') as f:
+                json.dump(self.data, f, ensure_ascii=False, indent=4)
+                print('{}_domains.json'.format(self.target), 'saved to folder.')
+
         self.pp.pprint(self.data)
         try:
             os.mkdir('reports/')
@@ -180,7 +203,6 @@ class BlackBird():
                                 'impact_desc' : desc
                                 }
                                 impact_df.loc[len(impact_df)] = data
-        #
         print(impact_df)
         impact_df.to_csv('reports/{}/data/{}_impact.csv'.format(self.target, self.target))
 
@@ -198,80 +220,52 @@ class BlackBird():
                 vulns_df.loc[len(vulns_df)] = data
         vulns_df.to_csv('reports/{}/data/{}_vulns.csv'.format(self.target, self.target))
 
+        certs = pd.DataFrame(columns = ['issuer_name','domain','id', 'not_before', 'not_after', 'expired'])
+        for c in self.certs:
+            c_data = {}
+            c_data['issuer_name'] = c['issuer_name']
+            c_data['domain'] = c['name_value']
+            c_data['id'] = c['id']
+            c_data['not_before'] = c['not_before']
+            c_data['not_after'] = c['not_after']
 
-
-
-        emails_df = pd.DataFrame(columns = ['domain', 'email'])
-        legal_df = pd.DataFrame(columns = ['domain', 'legal'])
-        socmedia_df = pd.DataFrame(columns = ['domain', 'platform', 'link'])
-        telephone_df = pd.DataFrame(columns = ['domain', 'number'])
-
-        for d in self.data:
-            if 'osint' in d.keys():
-                osint_data = d['osint']
-                if len(osint_data['email']) > 0:
-                    for email in osint_data['email']:
-                        data = {
-                        'domain' : d['domain'],
-                        'email' : email
-                        }
-                        emails_df.loc[len(emails_df)] = data
-
-                if len(osint_data['legal_mentions']) > 0:
-                    for legal in osint_data['legal_mentions']:
-                        data = {
-                        'domain' : d['domain'],
-                        'legal' : legal
-
-                        }
-                        legal_df.loc[len(emails_df)] = data
-
-                for soc in osint_data['social_media'].keys():
-                    for s in osint_data['social_media'][soc]:
-                        if len(s) > 1:
-                            data = {
-                            'domain' : d['domain'],
-                            'platform' : str(soc).capitalize(),
-                            'link' : s
-                            }
-                            socmedia_df.loc[len(socmedia_df)] = data
-
-                if len(osint_data['telephone']) > 0:
-                    data = {
-                    'domain' : d['domain'],
-                    'number' : osint_data['telephone']
-                    }
-                    telephone_df.loc[len(telephone_df)] = data
-
-        emails_df.to_csv('reports/{}/data/osint/{}_emails.csv'.format(self.target, self.target))
-        legal_df.to_csv('reports/{}/data/osint/{}_legals.csv'.format(self.target, self.target))
-        socmedia_df.to_csv('reports/{}/data/osint/{}_socmedia.csv'.format(self.target, self.target))
-        telephone_df.to_csv('reports/{}/data/osint/{}_telephones.csv'.format(self.target, self.target))
-
+            if dateparser.parse(c['not_after']) < self.now:
+                c_data['expired'] = True
+            else:
+                c_data['expired'] = False
+            certs.loc[len(certs)] = c_data
+        expired_certs = pd.DataFrame(columns = ['issuer_name','domain','id', 'not_before', 'not_after', 'expired'])
+        certs['not_after'] = pd.to_datetime(certs['not_after'])
+        for d in certs['domain'].unique():
+            max = certs.loc[(certs['domain'] == d) & (certs['not_after']< self.now)]['not_after'].max()
+            exp = certs.loc[(certs['domain'] ==d ) & (certs['not_after'] == max)]
+            exp = exp.drop_duplicates(subset = 'not_after', keep='first')
+            if len(exp) > 0:
+                for index, row in exp.iterrows():
+                    expired_certs.loc[len(expired_certs)] = row
+        print(expired_certs)
+        expired_certs.to_csv('reports/{}/data/{}_expired_certs.csv'.format(self.target, self.target))
 
 
 
     def run(self):
-        self.enum_domains(self.target)
-        # p = Pool(5)
-        # self.data = p.map(self.flyover, self.domains)
-        # p.daemon = True
-        # p.close()
-        # p.join()
-        for domain in self.domains[:20]:
-            # try:
-            self.data.append(self.flyover(domain))
-            # except:
-            #     pass
+        if self.target:
+            print('Scanning', self.target)
+            self.enum_domains(self.target)
 
-        self.lookup_vulnerabilities()
-        self.export()
-        report.generate_report(self.target)
+            for domain in self.domains:
+                self.flyover(domain)
+
+            self.lookup_vulnerabilities()
+            self.export()
+            report.generate_report(self.target)
+        else:
+            sys.exit()
 
 
 
 if __name__ == '__main__':
     blackbird = BlackBird()
-    osint = OSINT()
     cloak = Cloak()
+
     blackbird.run()

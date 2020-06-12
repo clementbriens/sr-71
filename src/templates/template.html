@@ -40,7 +40,7 @@
     </br>
 
     <h3>Common Weaknesses (CWEs)</h3>
-    <p>SR-71 was able to find {{ unique_cwes }} unique CWEs associated to vulnerabilities found on {{ target }}</p>
+    <p>SR-71 was able to find {{ unique_cwes }} unique CWE(s) associated to vulnerabilities found on {{ target }}</p>
     <p> The most common weakness type found was {{ most_common_weakness }}.</p>
     <div >
       {{ cwe_df }}
@@ -61,14 +61,16 @@
     </div>
     <br>
     </br>
-    <h2>OSINT</h2>
-    <p> This section presents SR-71's findings in terms of OSINT found on {{ target }}'s network. This includes social media accounts, emails, telephone numbers, and other factors that may interest threat actors when conducting social engineering attacks or during the reconnaissance phase of a wider network exploitation. </p>
-    <h3> Social Media</h3>
-    <p> SR-71 was able to find {{ nb_socmedia }} links with {{ unique_socmedia }} unique social media platforms on {{ target }}. The most common social media platform referenced was {{ most_common_socmedia }}. </p>
+
+    <h3> Certificates</h3>
+    <p>SR-71 was able to find {{ cert_nb }} certificate(s) associated to {{ target }}. {{ exp_nb }} of these are expired. We recommend you patch these as urgently as possible.</p>
 
     <div>
-      {{ socmedia_df }}
+      {{ exp_df }}
     </div>
+    <br>
+    </br>
+
 
 </body>
 </html>

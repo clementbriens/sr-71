@@ -39,7 +39,7 @@ class Cloak():
     def get(self, url):
         r = None
         try:
-            r  =  self.session.get(url, timeout = 1)
+            r  =  self.session.get(url, timeout = 3)
             code = r.status_code
         except:
             code = 404
