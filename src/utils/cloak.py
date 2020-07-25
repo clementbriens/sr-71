@@ -1,8 +1,5 @@
 import requests
 from colorama import Fore
-
-from stem import Signal
-from stem.control import Controller
 import socks
 
 class Cloak():
