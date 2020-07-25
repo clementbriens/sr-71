@@ -1,17 +1,6 @@
 # SR-71- TOR Network reconaissance & Vulnerability analysis
-```
-                   .                             .
-                  //                             \\
-                 //                               \\
-                //                                 \\
-               //                _._                \\
-            .---.              .//|\\.              .---.
-  ________ / .-. \_________..-~ _.-._ ~-..________ / .-. \_________ 
-           \ ~-~ /   /H-     `-=.___.=-'     -H\   \ ~-~ /
-             ~~~    / H          [H]          H \    ~~~
-                   / _H_         _H_         _H_ \
-                     UUU         UUU         UUU
- ```
+
+[![Screenshot](https://i.postimg.cc/TwdWYjTb/2020-07-25-17-14-40-Ubuntu-20-04-Running-Oracle-VM-Virtual-Box.png)](https://postimg.cc/gw70gZXc)
 
 ## Current capabilities
 
