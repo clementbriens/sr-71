@@ -1,4 +1,4 @@
-# SR-71- TOR Network reconaissance & Vulnerability analysis
+# SR-71- TOR Network reconaissance & Vulnerability Scanner
 
 [![Screenshot](https://i.postimg.cc/TwdWYjTb/2020-07-25-17-14-40-Ubuntu-20-04-Running-Oracle-VM-Virtual-Box.png)](https://postimg.cc/gw70gZXc)
 
