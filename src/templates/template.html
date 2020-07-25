@@ -10,8 +10,18 @@
 
 </head>
 <body>
-  <h1> {{ target }} vulnerability report </h1>
-    <h2> Network and Vulnerabilities </h2>
+  <h1>{{ target }} vulnerability report </h1>
+    <h2>Executive Summary </h2>
+      <p> We were able to run a vulnerability scan over {{ nb_domains }} domains associated to {{ target }}. In sum, we were able to find:</p>
+      <ul>
+        <li>{{ nb_domains }} domains associated to {{ target }} </li>
+        <li>{{ unique_tech}} technologies</li>
+        <li>{{ unique_cves }} unique CVEs</li>
+        <li>{{ exp_nb }} expired certificates</li>
+      </ul>
+    <br>
+    </br>
+    <h2>Network and Vulnerabilities </h2>
     <p> This section aims to provide an overview of {{ target }}'s network, including subdomains, as well as the technologies and Critical Vunlerabilities and Exposures (CVEs) found on the subdomains. In addition to providing CVE Severity Scores (CVSS), this report also provides an overview of the associated Common Weaknesses Enumeration (CWEs). </p>
     <h3>Domains</h3>
     <p> SR-71 was able to find {{ nb_domains }} subdomains associate to {{ target }}. SR-71 was also able to find {{ nb_tech }} technologies associated to these domains.</p>
@@ -25,42 +35,48 @@
     </br>
 
     <h3>Vulnerabilities</h3>
-    <p>SR-71 was able to find {{ unique_cves }} unique CVEs associated to {{ target }}, located on {{ unique_domains }} domains on the target network. CVE's found have an average severity of {{ mean_severity }}, with {{ nb_critical }} vulnerabilities rated 'CRITICAL' (8.0 or higher.) </p>
-    <p> The most common vulnerability type found was {{ most_common_vulnerability }}.</p>
-    <div >
-      {{ vulns_df }}
-    </div>
-    <br>
-    </br>
-    <img src= {{vuln_chart_path}}>
-    <br>
-    </br>
-    <img src= {{sev_chart_path}}>
-    <br>
-    </br>
+    {% if unique_cves > 0 %}
+      <p>SR-71 was able to find {{ unique_cves }} unique CVEs associated to {{ target }}, located on {{ unique_domains }} domains on the target network. CVE's found have an average severity of {{ mean_severity }}, with {{ nb_critical }} vulnerabilities rated 'CRITICAL' (8.0 or higher.) </p>
+      <p> The most common vulnerability type found was {{ most_common_vulnerability }}.</p>
+      <div >
+        {{ vulns_df }}
+      </div>
+      <br>
+      </br>
+      <img src= {{vuln_chart_path}}>
+      <br>
+      </br>
+      <img src= {{sev_chart_path}}>
+      <br>
+      </br>
 
-    <h3>Common Weaknesses (CWEs)</h3>
-    <p>SR-71 was able to find {{ unique_cwes }} unique CWE(s) associated to vulnerabilities found on {{ target }}</p>
-    <p> The most common weakness type found was {{ most_common_weakness }}.</p>
-    <div >
-      {{ cwe_df }}
-    </div>
-    <br>
-    </br>
 
-    <h3>Potential Impact</h3>
-    <div>
-      {{ impact_df }}
-    </div>
+      <h3>Common Weaknesses (CWEs)</h3>
+      <p>SR-71 was able to find {{ unique_cwes }} unique CWE(s) associated to vulnerabilities found on {{ target }}</p>
+      <p>The most common weakness type found was {{ most_common_weakness }}.</p>
+      <div >
+        {{ cwe_df }}
+      </div>
+      <br>
+      </br>
+
+    {% else %}
+      <p>SR-71 was not able to find any common vulnerabilities associated to {{ target }}. </p>
+    {% endif %}
 
     <h3>Technologies</h3>
-    <p>SR-71 was able to find {{ unique_tech }} technologies on {{ target }}. The most common technology found was {{ most_common_tech }}, and the most common technology type found was {{ most_common_type }}.</p>
+    {% if unique_tech > 0 %}
+      <p>SR-71 was able to find {{ unique_tech }} technologies on {{ target }}. The most common technology found was {{ most_common_tech }}, and the most common technology type found was {{ most_common_type }}.</p>
 
-    <div >
-      {{ tech_df }}
-    </div>
-    <br>
-    </br>
+      <div >
+        {{ tech_df }}
+      </div>
+      <br>
+      </br>
+    {% else %}
+      <p>SR-71 was not able to find any web-facing technologies on {{ target }}.</p>
+    {% endif %}
+
 
     <h3> Certificates</h3>
     <p>SR-71 was able to find {{ cert_nb }} certificate(s) associated to {{ target }}. {{ exp_nb }} of these are expired. We recommend you patch these as urgently as possible.</p>

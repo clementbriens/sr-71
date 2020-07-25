@@ -6,10 +6,6 @@ import socket
 import _socket
 import re
 
-parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('-a', metavar = 'a')
-parser.add_argument('-v', metavar = 'v')
-
 def get_vuln(domain, app, ver):
     socks.setdefaultproxy()
     session = requests.Session()
@@ -63,6 +59,7 @@ def get_cve_info(cve, session):
         data = get_cwe_info(cwe, session)
         cwe_data.append(data)
 
+
     cve_data = {
     'cve_name' : cve,
     'cvss' : cvss,
@@ -91,37 +88,6 @@ def get_cwe_info(cwe, session):
     data = {
     'cwe_id' : 'CWE-' + str(cwe),
     'cwe_name' : cwe_name,
-    'cwe_description' : cwe_description,
-    'cwe_impact' : impact_list,
-    'cwe_mitigation' : get_mitigation_info(cwe, session)
+    'cwe_description' : cwe_description
     }
     return data
-
-def get_mitigation_info(cwe, session):
-    try:
-        mit_url = 'https://cwe.mitre.org/data/definitions/{}.html'.format(cwe)
-        r = session.get(mit_url)
-        soup = BeautifulSoup(r.content, 'html.parser')
-        table = soup.find('div', {'id' : 'Potential_Mitigations'})
-        mitigation_data =[]
-        for row in table.find_all('tr'):
-            mitigation = {}
-            mitigation['phase'] = row.find('p', {'class' : 'subheading'}).get_text().split('Phase: ')[1]
-            text = row.find_all('div', {'class' : 'indent'})
-            texts = []
-            for t in text:
-                if t.get_text != '':
-                    texts.append(t.get_text())
-            mitigation['text'] = ' '.join(texts)
-            mitigation_data.append(mitigation)
-        return mitigation_data
-    except:
-        return ['No known mitigations found']
-
-if __name__ == '__main__':
-    args = parser.parse_args()
-    # get_vuln(args.a, args.v)
-    session = requests.Session()
-    # get_info('CVE-2019-1010298', session)
-    get_vuln('test.com', 'nginx', '1.10.3')
-    # get_mitigation_info(400, session)

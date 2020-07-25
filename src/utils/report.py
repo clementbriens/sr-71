@@ -94,6 +94,12 @@ def generate_report(target):
     cwe_df['domain'] = cwe_df['domain'].apply(lambda x: '<a href="{}">{}</a>'.format(x,x))
     cwe_df = cwe_df.drop_duplicates()
 
+    mit_df = pd.read_csv('reports/{}/data/{}_mitigation.csv'.format(target,target), index_col = 0)
+    mitigations = list()
+    for index, row in mit_df.iterrows():
+        mitigations.append(row)
+
+
     certs_df = pd.read_csv('reports/{}/data/{}_certs.csv'.format(target,target), index_col = 0)
     certs_df = certs_df.fillna('')
 
@@ -101,6 +107,16 @@ def generate_report(target):
     exp_df = exp_df.fillna('')
 
     # print(cwe_df)
+    try:
+        most_common_vulnerability = vulns_df.vulnerability_types.mode().values[0]
+        most_common_cwe = cwe_df.cwe_name.mode().values[0]
+        most_common_type = tech_df.type.mode().values[0],
+        most_common_tech = tech_df.technology.mode().values[0]
+    except:
+        most_common_vulnerability = ''
+        most_common_cwe = ''
+        most_common_type = ''
+        most_common_tech = ''
 
     template_vars = {
     "target" : target,
@@ -111,17 +127,19 @@ def generate_report(target):
     "unique_domains" : len(vulns_df['domain'].unique()),
     "mean_severity" : round(vulns_df['severity'].mean(),1),
     "nb_critical" : len(vulns_df.loc[vulns_df['severity'] >= 8]),
-    "most_common_vulnerability": vulns_df.vulnerability_types.mode().values[0],
+    "most_common_vulnerability": most_common_vulnerability ,
     "vulns_df" : vulns_df.to_html(index=False, classes='table-hover', render_links=True, escape=False),
     "vuln_chart_path" : vuln_chart_path,
     "sev_chart_path" : sev_chart_path,
     "cwe_df" : cwe_df.to_html(index=False, render_links=True, escape=False),
     "unique_cwes" : len(cwe_df['cwe_id'].unique()),
-    "most_common_weakness" : cwe_df.cwe_name.mode().values[0],
+    "most_common_weakness" : most_common_cwe,
     "impact-df" : impact_df.to_html(index=False, render_links=True, escape=False),
+    'nb_mit' : len(mitigations),
+    'mitigations' : mitigations,
     'unique_tech' : len(tech_df['technology'].unique()),
-    'most_common_type' : tech_df.type.mode().values[0],
-    'most_common_tech': tech_df.technology.mode().values[0],
+    'most_common_type' : most_common_type,
+    'most_common_tech': most_common_tech,
     'tech_df' : tech_df.to_html(index=False, render_links=True, escape=False),
     'cert_nb' : len(certs_df),
     'exp_nb' : len(exp_df),
@@ -134,6 +152,7 @@ def generate_report(target):
     Html_file= open("reports/{}/{}.html".format(target, target),"w")
     Html_file.write(html_out)
     Html_file.close()
+    print('Report generated here: file://{}/reports/{}/{}.html'.format(cur_path, target, target))
 
 
 

@@ -1,25 +1,13 @@
 import requests
 import json
-from cloak import Cloak
-from bs4 import BeautifulSoup
-from wad import detection
+from utils.cloak import Cloak
 import os
-import subprocess
 from wad import *
-from bs4 import BeautifulSoup
-import socks
-import socket
 import pandas as pd
-import vuln
-import report
-from ast import literal_eval
+from utils import vuln, report
+from utils.export import Exporter
 import sys
 import argparse
-import dateparser
-from datetime import datetime
-
-
-
 
 class BlackBird():
 
@@ -27,11 +15,36 @@ class BlackBird():
         ap = argparse.ArgumentParser()
         ap.add_argument("-d","--domain", required=True,help="Master domain to recon.")
         ap.add_argument("-j","--json", action='store_true', help="JSON export of vulnerabilities and domain data.")
-
-
+        ap.add_argument("-q","--quiet", action='store_true', default=False, help="Enable quiet mode.")
+        ap.add_argument("-t","--timeout", type=int, default=5, help="Set request timeout.")
         return vars(ap.parse_args())
+
+    def title(self):
+        print('''                   .                             .
+                  //                             \\\\
+                 //                               \\\\
+                //                                 \\\\
+               //                _._                \\\\
+            .---.              .//|\\.              .---.
+  ________ / .-. \_________..-~ _.-._ ~-..________ / .-. \_________
+           \ ~-~ /   /H-     `-=.___.=-'     -H\   \ ~-~ /
+             ~~~    / H          [H]          H \    ~~~
+                   / _H_         _H_         _H_ \\
+                    (UUU         UUU         UUU)
+
+===================================================================
+
+SR-71 Domain enumeration and vulnerability analysis tool
+By Clement Briens
+https://github.com/clementbriens/
+
+ASCII art: https://asciiart.website
+
+==================================================================
+                     ''')
+
     def __init__(self):
-        self.now = dateparser.parse(str(datetime.now()))
+        self.title()
         self.args = self.get_args()
         self.target = self.args['domain']
         self.certs = []
@@ -39,7 +52,6 @@ class BlackBird():
         self.data = []
         self.vulnerabilities = []
         self.technologies = []
-        self.pp = pprint.PrettyPrinter()
 
     def enum_domains(self, target):
         certs = pd.DataFrame(columns = ['domain', 'not_after'])
@@ -61,8 +73,11 @@ class BlackBird():
 
     def detect_tech(self, domain):
         website = 'https://' + domain
-        # result = subprocess.check_output(['wad', '-u', website])
-        result = Detector().detect(website)
+        try:
+            result = Detector().detect(website)
+        except:
+            cloak.sprint('WAD detection failed')
+            return []
         try:
             for r in result:
                 if r not in self.technologies:
@@ -77,7 +92,7 @@ class BlackBird():
                 if tech_info['ver'] != None:
                     data = vuln.get_vuln(domain['domain'], tech_info['app'], tech_info['ver'])
                     if data not in self.vulnerabilities:
-                        if len(data) > 0:
+                        if data:
                             self.vulnerabilities.append(data)
 
     def flyover(self, domain):
@@ -99,17 +114,15 @@ class BlackBird():
         self.data.append(domain_data)
 
     def export(self):
-
         if self.args['json']:
-            with open('{}_vulnerabilities.json'.format(self.target), 'w', encoding='utf-8') as f:
+            with open('{}/data/{}_vulnerabilities.json'.format(self.target, self.target), 'w', encoding='utf-8') as f:
                 json.dump(self.vulnerabilities, f, ensure_ascii=False, indent=4)
                 print('{}_vulnerabilities.json'.format(self.target), 'saved to folder.')
 
-            with open('{}_domains.json'.format(self.target), 'w', encoding='utf-8') as f:
+            with open('{}/data/{}_domains.json'.format(elf.target, self.target), 'w', encoding='utf-8') as f:
                 json.dump(self.data, f, ensure_ascii=False, indent=4)
                 print('{}_domains.json'.format(self.target), 'saved to folder.')
 
-        self.pp.pprint(self.data)
         try:
             os.mkdir('reports/')
         except:
@@ -124,127 +137,11 @@ class BlackBird():
         except:
             pass
 
-        try:
-            os.mkdir('reports/' + self.target + '/data/osint/')
-        except:
-            pass
-
-
-        domains_df = pd.DataFrame(columns = ['domain', 'response', 'technologies'])
-
-        for d in self.data:
-            techs = []
-            for t in d['technologies']:
-                if t['ver'] != None:
-                    techs.append(str('{} {}'.format(t['app'], t['ver'])))
-                else:
-                    techs.append(str('{}'.format(t['app'])))
-            data = {
-            "domain" : d['domain'],
-            'response' : d['response'],
-            'technologies' : ', '.join(techs)
-            }
-
-            domains_df.loc[len(domains_df)] = data
-        domains_df.to_csv('reports/{}/data/{}_domains.csv'.format(self.target, self.target))
-
-        tech_df = pd.DataFrame(columns = ['technology', 'version', 'type'])
-        for d in self.data:
-            tech_data = []
-            for t in d['technologies']:
-                if t not in tech_data:
-                    tech_data.append(t)
-                    data = {
-                    'technology' : t['app'],
-                    'version' : t['ver'],
-                    'type' : t['type']
-
-                    }
-                    tech_df.loc[len(tech_df)] = data
-
-        tech_df.to_csv('reports/{}/data/{}_technologies.csv'.format(self.target, self.target))
-
-        cwe_df = pd.DataFrame(columns = ['domain', 'cve', 'cwe_id', 'cwe_name', 'cwe_description'])
-        cwes = []
-        for d in self.vulnerabilities:
-            domain = d['domain']
-
-            for cve in d['cves']:
-                for cwe in cve['cwes']:
-                    data = {
-                    'domain' : domain,
-                    'cve' : cve['cve_name'],
-                    'cwe_id' : cwe['cwe_id'],
-                    'cwe_name' : cwe['cwe_name'],
-                    'cwe_description' : cwe['cwe_description']
-                    }
-                    cwe_df.loc[len(cwe_df)] = data
-
-        cwe_df.to_csv('reports/{}/data/{}_cwes.csv'.format(self.target, self.target))
-
-        impact_df = pd.DataFrame(columns = ['domain', 'cve', 'cwe_id', 'impact_scope', 'impact_desc'])
-        # self.pp.pprint(self.vulnerabilities)
-        triad = ['Accessibility', 'Confidentiality', 'Integrity']
-        for d in self.vulnerabilities:
-            domain = d['domain']
-            for cve in d['cves']:
-                for cwe in cve['cwes']:
-                    for impact in cwe['cwe_impact']:
-                        for scope in impact['scope']:
-                            if scope in triad:
-
-                                desc = impact['description']
-
-                                data : {
-                                'domain' : domain,
-                                'cve' : cve['cve_name'],
-                                'cwe_id' : cwe['cwe_name'],
-                                'impact_scope' : scope,
-                                'impact_desc' : desc
-                                }
-                                impact_df.loc[len(impact_df)] = data
-        print(impact_df)
-        impact_df.to_csv('reports/{}/data/{}_impact.csv'.format(self.target, self.target))
-
-        vulns_df = pd.DataFrame(columns = ['domain', 'technology', 'vulnerability', 'severity', 'vulnerability_types'])
-        for d in self.vulnerabilities:
-            for cve in d['cves']:
-
-                data = {
-                'domain' : d['domain'],
-                'technology' : d['tech'],
-                'vulnerability' : cve['cve_name'],
-                'severity' : cve['cvss'],
-                'vulnerability_types' : ', '.join(cve['vulnerability_types'])
-                }
-                vulns_df.loc[len(vulns_df)] = data
-        vulns_df.to_csv('reports/{}/data/{}_vulns.csv'.format(self.target, self.target))
-
-        certs = pd.DataFrame(columns = ['issuer_name','domain','id', 'not_before', 'not_after', 'expired'])
-        for c in self.certs:
-            c_data = {}
-            c_data['issuer_name'] = c['issuer_name']
-            c_data['domain'] = c['name_value']
-            c_data['id'] = c['id']
-            c_data['not_before'] = c['not_before']
-            c_data['not_after'] = c['not_after']
-
-            if dateparser.parse(c['not_after']) < self.now:
-                c_data['expired'] = True
-            else:
-                c_data['expired'] = False
-            certs.loc[len(certs)] = c_data
-        expired_certs = pd.DataFrame(columns = ['issuer_name','domain','id', 'not_before', 'not_after', 'expired'])
-        certs['not_after'] = pd.to_datetime(certs['not_after'])
-        for d in certs['domain'].unique():
-            max = certs.loc[(certs['domain'] == d) & (certs['not_after']< self.now)]['not_after'].max()
-            exp = certs.loc[(certs['domain'] ==d ) & (certs['not_after'] == max)]
-            exp = exp.drop_duplicates(subset = 'not_after', keep='first')
-            if len(exp) > 0:
-                for index, row in exp.iterrows():
-                    expired_certs.loc[len(expired_certs)] = row
-        print(expired_certs)
-        expired_certs.to_csv('reports/{}/data/{}_expired_certs.csv'.format(self.target, self.target))
+        ex = Exporter(self.target,
+        self.data,
+        self.certs,
+        self.vulnerabilities)
+        ex.export_all()
 
 
 
@@ -266,6 +163,5 @@ class BlackBird():
 
 if __name__ == '__main__':
     blackbird = BlackBird()
-    cloak = Cloak()
-
+    cloak = Cloak(blackbird.args)
     blackbird.run()
