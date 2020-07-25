@@ -145,18 +145,9 @@ def generate_report(target):
     'exp_nb' : len(exp_df),
     'exp_df' : exp_df.to_html(index=False, render_links=True, escape=False)
     }
-
-
     html_out = template.render(template_vars)
 
     Html_file= open("reports/{}/{}.html".format(target, target),"w")
     Html_file.write(html_out)
     Html_file.close()
     print('Report generated here: file://{}/reports/{}/{}.html'.format(cur_path, target, target))
-
-
-
-
-if __name__ == '__main__':
-    target = 'orpheus-cyber.com'
-    generate_report(target)
