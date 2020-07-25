@@ -1,4 +1,4 @@
-# SR-71- TOR Network reconaissance & Vulnerability Scanner
+# SR-71- TOR Network reconnaissance & Vulnerability Scanner
 
 [![Screenshot](https://i.postimg.cc/TwdWYjTb/2020-07-25-17-14-40-Ubuntu-20-04-Running-Oracle-VM-Virtual-Box.png)](https://postimg.cc/gw70gZXc)
 
@@ -30,9 +30,9 @@ Optional arguments:
 
 - `-j` for JSON output of vulnerablities and domain data. Default is false.
 - `-q` for quiet mode, supresses output. Default is false.
-- `-t` for adjusting request timeouts (in seconds). Default is 5
+- `-t` for adjusting request timeouts (in seconds). Default is 5.
 
-HTML reports, datasets and plots are generated in the `reports` folder.
+HTML reports, datasets and plots are saved in the `reports` folder.
 
 ## Links
 
