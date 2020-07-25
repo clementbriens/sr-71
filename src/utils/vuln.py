@@ -6,10 +6,6 @@ import socket
 import _socket
 import re
 
-parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('-a', metavar = 'a')
-parser.add_argument('-v', metavar = 'v')
-
 def get_vuln(domain, app, ver):
     socks.setdefaultproxy()
     session = requests.Session()
@@ -63,6 +59,7 @@ def get_cve_info(cve, session):
         data = get_cwe_info(cwe, session)
         cwe_data.append(data)
 
+
     cve_data = {
     'cve_name' : cve,
     'cvss' : cvss,
@@ -78,15 +75,19 @@ def get_cwe_info(cwe, session):
     r = session.get(cwe_url)
     soup = BeautifulSoup(r.content, 'html.parser')
     cwe_name = soup.find('h2').get_text().split(': ')[1]
+    cwe_description = soup.find('div', {'id' : 'Description'}).find('div', {'class' : 'indent'}).get_text()
+    impact_table  = soup.find('div', {'id' : 'Common_Consequences'}).find_all('tr')
+    impact_list = []
+    for row in impact_table[1:]:
+        impact_data = {}
+        impact_data['scope'] = re.findall('[A-Z][^A-Z]*', row.find('td', {'valign' : 'middle'}).get_text())
+        impact_data['description'] = row.find_all('div', {'style' : 'padding-top:5px'})[1].get_text()
+        impact_list.append(impact_data)
+
+
     data = {
     'cwe_id' : 'CWE-' + str(cwe),
-    'cwe_name' : cwe_name
+    'cwe_name' : cwe_name,
+    'cwe_description' : cwe_description
     }
     return data
-
-if __name__ == '__main__':
-    args = parser.parse_args()
-    # get_vuln(args.a, args.v)
-    session = requests.Session()
-    # get_info('CVE-2019-1010298', session)
-    get_vuln('test.com', 'nginx', '1.10.3')

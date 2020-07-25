@@ -2,19 +2,28 @@
 #
 # Author: Sebastian Lopienski <Sebastian.Lopienski@cern.ch>
 from __future__ import absolute_import, division, print_function, unicode_literals
-import six
+
 
 from hashlib import md5
 import logging
 import sys
 import ssl
+
+import sys
+
 import socks
 import socket
+from urllib3 import ProxyManager
+import requests
 
-socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, '127.0.0.1', 9050, True)
+
+socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
+
+# patch the socket module
 socket.socket = socks.socksocket
 
 
+import six
 
 def count(d, e):
     # TODO: Use collections.Counter once moved to python 2.7
@@ -31,20 +40,21 @@ def count(d, e):
 def hash_id(x):
     return md5(("%s" % x).encode('utf-8')).hexdigest()[:8]
 
+def getaddrinfo(*args):
+  return [(socket.AF_INET, socket.SOCK_STREAM, 6, '', (args[0], args[1]))]
+
 
 def urlopen(url, timeout):
-    timeout = 2
     headers = {'User-Agent': 'Mozilla/5.0 Firefox/33.0'}
-    ip = six.moves.urllib.request.urlopen("http://almien.co.uk/m/tools/net/ip/").read()
-    print('------ WAD IP: ' + str(ip).split('IPv4: ')[1].split('<')[0])
-    # proxies = {'http' : 'http://localhost:9050',
-    #             'https' : 'h'}
-    req = six.moves.urllib.request.Request(url, None, headers)
-    if sys.version_info >= (2, 7, 9):
-        page = six.moves.urllib.request.urlopen(req, timeout=timeout, context=ssl._create_unverified_context())
-    else:
-        page = six.moves.urllib.request.urlopen(req, timeout=timeout)
-    return page
+    session = requests.session()
+    session.proxies = {'http':  'socks5://127.0.0.1:9050',
+                       'https': 'socks5://127.0.0.1:9050'}
+    ip = session.get('http://almien.co.uk/m/tools/net/ip/', headers = headers).text.split("IPv4: ")[1].split('<')[0]
+    print('WAD IP:', ip)
+    r = session.get(url, headers = headers)
+    return r
+
+
 
 
 def error_to_str(e):

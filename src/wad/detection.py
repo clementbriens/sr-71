@@ -52,7 +52,7 @@ class Detector(object):
         if six.PY3:
             content = content.decode()
 
-        findings = self.findings(url, page.info(), content)
+        findings = self.findings(url, page.headers, content)
         findings += self.additional_checks(page, url, content)
         return {url: findings  }
 
@@ -90,7 +90,7 @@ class Detector(object):
         :return: Content if present, None on handled exception
         """
         try:
-            content = page.read()
+            content = page.content
         except (socket.timeout, six.moves.http_client.HTTPException, SSLError) as e:
             logging.info("Exception while reading %s, terminating: %s", url, tools.error_to_str(e))
             return None
@@ -106,7 +106,7 @@ class Detector(object):
         return page
 
     def get_new_url(self, page):
-        return page.geturl()
+        return page.url
 
     def normalize_url(self, url):
         path = ''.join(six.moves.urllib.parse.urlparse(url)[2:])

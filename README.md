@@ -12,8 +12,6 @@
 
 ## Todo
 
-- Enumerate mitigation tactics related to CWE's
-- Fix plots not showing up in report
 - Improve report css
 - Dynamic plots?
 - Integrate SubList3r
