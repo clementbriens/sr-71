@@ -40,5 +40,5 @@ soupsieve==2.0
 stem==1.8.0
 torrequest==0.1.0
 tzlocal==2.1
-urllib3==1.25.8
+urllib3==1.26.5
 webencodings==0.5.1
